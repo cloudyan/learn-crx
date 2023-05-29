@@ -4,7 +4,7 @@
 document.addEventListener('DOMContentLoaded', function()
 {
   // 注入自定义JS
-  injectCustomJs();
+  // injectCustomJs();
   // 给谷歌搜索结果的超链接增加 _target="blank"
   if(location.host == 'www.google.com.tw')
   {

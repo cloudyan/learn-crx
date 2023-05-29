@@ -1,3 +1,4 @@
+
 $(function() {
 
   // 加载设置
@@ -9,42 +10,6 @@ $(function() {
   // 初始化国际化
   $('#test_i18n').html(chrome.i18n.getMessage("helloWorld"));
 
-});
-
-
-
-const wait = (t) => new Promise((resolve) => setTimeout(resolve, t))
-// background.js 获取当前Tab
-async function getCurrentTab() {
-  let queryOptions = { active: true, currentWindow: true };
-  let [tab] = await chrome.tabs.query(queryOptions);
-  return tab;
-}
-
-// 获取
-$('#get_arms').click(() => {
-  let current = 0;
-  const links = [
-    'https://www.baidu.com/',
-    'https://www.cnblogs.com/',
-  ];
-  let timer = setInterval(() => {
-    console.log('current', current);
-    if (current > 20) clearInterval(timer);
-    current++;
-    let index = current%2;
-
-    // getCurrentTab()
-    //   .then(tab => tab.id)
-    //   .then(tabId => {
-    //     chrome.tabs.update(tabId, {url: links[index]});
-    //     // executeScriptToCurrentTab('document.body.style.backgroundColor="red";');
-    //   })
-    getCurrentTabId(tabId => {
-      chrome.tabs.update(tabId, {url: links[index]});
-      executeScriptToCurrentTab('document.body.style.backgroundColor="red";');
-    });
-  }, 3000);
 });
 
 
@@ -255,3 +220,165 @@ $('#check_media').click(e => {
   alert('即将打开一个有视频的网站，届时将自动检测是否存在视频！');
   chrome.tabs.create({url: 'http://www.w3school.com.cn/tiy/t.asp?f=html5_video'});
 });
+
+
+
+
+
+
+
+
+// ============================ arms ==================================
+
+
+const arms = [
+  {
+    name: 'hbcampaign',
+    type: 'mgr',
+    tracesRate: '10',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%40c9477d507c80563#/index',
+  },
+  {
+    name: 'hbcoupon',
+    type: 'mgr',
+    tracesRate: '10',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%40295b53ec925d71d',
+  },
+  // {
+  //   name: 'hbapplyx',
+  //   type: 'mgr',
+  //   tracesRate: '10',
+  //   status: 'off',
+  //   link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%405780d3abb1a8d53',
+  // }
+  {
+    name: 'apphq',
+    type: 'mgr',
+    tracesRate: '10',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%4034a68ad2932561e',
+  },
+  {
+    name: 'hbmembership',
+    type: 'mgr',
+    tracesRate: '10',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%407791460e84c0372',
+  },
+  {
+    name: 'loanweb',
+    type: 'mgr',
+    tracesRate: '10',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%40774988d42742146',
+  },
+  {
+    name: 'huanbeiapp',
+    type: 'mgr',
+    tracesRate: '1',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%40f005b8492b7ca40',
+  },
+  {
+    name: 'hbzc',
+    type: 'mgr',
+    tracesRate: '1',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%408ec00f8a73a2c2c',
+  },
+  {
+    name: 'hbmgm',
+    type: 'mgr',
+    tracesRate: '10',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%400bdfc917558939f',
+  },
+  {
+    name: 'cmsweb',
+    type: 'ui',
+    tracesRate: '10',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%40edf7161106df9bc',
+  },
+  {
+    name: 'cmscommon',
+    type: 'offline',
+    tracesRate: '10',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%405f59cc2a6213564',
+  },
+  // {
+  //   name: 'cmscommonweb',
+  //   type: 'offline',
+  //   tracesRate: '10',
+  //   status: 'off',
+  //   link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%402c2ba264e981571',
+  // },
+  {
+    name: 'businessweb',
+    type: 'offline',
+    tracesRate: '10',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%4093743010cdcc5e6',
+  },
+  // {
+  //   name: 'miscweb',
+  //   type: 'ui',
+  //   tracesRate: '10',
+  //   status: 'off',
+  //   link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%408b126310b41a174',
+  // },
+  {
+    name: 'creditweb',
+    type: 'offline',
+    tracesRate: '10',
+    status: 'on',
+    link: 'https://arms.console.aliyun.com/retcode?pid=ewawjsgsdv%400d0e3890767ef48',
+  },
+];
+
+const projectKeys = arms.map(item => item.name);
+const projects = arms.reduce((obj, item) => {
+  obj[item.name] = item;
+  return obj;
+}, {});
+
+const wait = (t) => new Promise((resolve) => setTimeout(resolve, t))
+// background.js 获取当前Tab
+async function getCurrentTab() {
+  let queryOptions = { active: true, currentWindow: true };
+  let [tab] = await chrome.tabs.query(queryOptions);
+  return tab;
+}
+
+// 获取
+$('#get_arms').click(() => {
+  let current = 0;
+  const links = [
+    'https://www.baidu.com/',
+    'https://www.cnblogs.com/',
+  ];
+  let timer = setInterval(() => {
+    console.log('current', current);
+    if (current > arms.length) {
+      clearInterval(timer);
+    }
+    current++;
+    // let index = current%2;
+
+    // getCurrentTab()
+    //   .then(tab => tab.id)
+    //   .then(tabId => {
+    //     chrome.tabs.update(tabId, {url: links[index]});
+    //     // executeScriptToCurrentTab('document.body.style.backgroundColor="red";');
+    //   })
+    getCurrentTabId(tabId => {
+      chrome.tabs.update(tabId, {url: arms[current].link});
+      // executeScriptToCurrentTab('document.body.style.backgroundColor="red";');
+    });
+  }, 10000);
+});
+
+
